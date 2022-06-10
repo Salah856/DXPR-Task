@@ -44,19 +44,22 @@ const data = [
 ]; 
 
 
-setTimeout(()=>{
-    
-    let loader = document.getElementsByClassName("loader")[0]; 
-    let cardsContainer = document.getElementsByClassName("cards")[0]; 
+let loader = document.getElementsByClassName("loader")[0]; 
+let cardsContainer = document.getElementsByClassName("cards")[0]; 
 
-    loader.style.display = "none"; 
-    
-    data.map((el)=>{
-       cardsContainer.innerHTML += createCardComponentWithData(el); 
+
+const myPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {    
+        loader.style.display = "none";
+        resolve(data);
+    }, 1000);
+});
+
+myPromise.then(d =>{
+    d.map((el)=>{
+        cardsContainer.innerHTML += createCardComponentWithData(el); 
     })
-
-}, 1000);
-
+})
 
 
 const createCardComponentWithData = (componentData)=>{
@@ -98,4 +101,5 @@ const createCardComponentWithData = (componentData)=>{
                 </div>
             </div>
     `
-}
+}; 
+
